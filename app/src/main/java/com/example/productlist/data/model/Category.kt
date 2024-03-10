@@ -7,5 +7,11 @@ enum class Category(val value: String) {
     SKINCARE("skincare"),
     GROCERIES("groceries"),
     HOME_DECORATION("home-decoration"),
-    DEFAULT("default")
+    DEFAULT("default");
+
+    companion object {
+
+        private val map = entries.associateBy(Category::value)
+        fun fromValue(value: String) = map[value] ?: DEFAULT
+    }
 }

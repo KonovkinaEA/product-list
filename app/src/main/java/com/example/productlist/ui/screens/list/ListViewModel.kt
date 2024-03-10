@@ -19,15 +19,14 @@ class ListViewModel @Inject constructor(private val repository: Repository) : Vi
     val uiState = _uiState.asStateFlow()
 
     init {
-        setupViewModel()
+        loadData()
     }
 
-    private fun setupViewModel() {
+    private fun loadData() {
         viewModelScope.launch {
+            repository.loadProductsData(0)
             repository.products.collectLatest { products ->
-                _uiState.update {
-                    uiState.value.copy(products = products)
-                }
+                _uiState.update { uiState.value.copy(products = products) }
             }
         }
     }

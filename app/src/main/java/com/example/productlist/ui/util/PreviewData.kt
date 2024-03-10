@@ -1,5 +1,6 @@
 package com.example.productlist.ui.util
 
+import com.example.productlist.data.model.Category
 import com.example.productlist.data.model.Product
 
 val products = listOf(
@@ -11,7 +12,11 @@ val products = listOf(
         discountPercentage = 12.5,
         newPrice = 8.75,
         rating = 4.85,
-        brand = "brand1"
+        stock = 0,
+        brand = "brand1",
+        category = Category.DEFAULT,
+        thumbnail = "thumbnail1",
+        images = emptyList()
     ),
     Product(
         id = 1,
@@ -21,7 +26,11 @@ val products = listOf(
         discountPercentage = 12.5,
         newPrice = 8.75,
         rating = 4.85,
-        brand = "brand2"
+        stock = 0,
+        brand = "brand2",
+        category = Category.DEFAULT,
+        thumbnail = "thumbnail2",
+        images = emptyList()
     ),
     Product(
         id = 2,
@@ -31,6 +40,10 @@ val products = listOf(
         discountPercentage = 12.5,
         newPrice = 8.75,
         rating = 4.85,
-        brand = "brand3"
+        stock = 0,
+        brand = "brand3",
+        category = Category.DEFAULT,
+        thumbnail = "thumbnail3",
+        images = emptyList()
     )
 )
