@@ -3,31 +3,31 @@ package com.example.productlist.ui.screens.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.productlist.data.Repository
-import com.example.productlist.ui.screens.list.model.ListUiState
+import com.example.productlist.data.model.ProductsDataState
+import com.example.productlist.ui.screens.list.model.ListAction
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ListViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ListUiState())
-    val uiState = _uiState.asStateFlow()
+    val productsDataState: StateFlow<ProductsDataState> = repository.productsDataState
 
     init {
-        loadData()
+        loadData(true)
     }
 
-    private fun loadData() {
-        viewModelScope.launch {
-            repository.loadProductsData(0)
-            repository.products.collectLatest { products ->
-                _uiState.update { uiState.value.copy(products = products) }
-            }
+    fun onAction(action: ListAction) {
+        when (action) {
+            ListAction.NextPage -> loadData(true)
+            ListAction.PreviousPage -> loadData(false)
+            is ListAction.OpenProduct -> {}
         }
+    }
+
+    private fun loadData(nextElements: Boolean) {
+        viewModelScope.launch { repository.loadProductsData(nextElements) }
     }
 }
