@@ -34,13 +34,11 @@ import com.example.productlist.ui.theme.ExtendedTheme
 import com.example.productlist.ui.theme.Green
 import com.example.productlist.ui.theme.ProductListTheme
 import com.example.productlist.ui.theme.ThemeModePreview
+import com.example.productlist.ui.util.products
 
 @ExperimentalMaterial3Api
 @Composable
-fun ProductItem(
-    product: Product,
-    onAction: (ListAction) -> Unit = {}
-) {
+fun ProductItem(product: Product, onAction: (ListAction) -> Unit) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
         colors = CardDefaults.cardColors(
@@ -149,26 +147,21 @@ private fun PriceWithoutDiscount(product: Product) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-private fun ProductItemPreview(
+private fun ProductItemWithDiscountPreview(
     @PreviewParameter(ThemeModePreview::class) darkTheme: Boolean
 ) {
     ProductListTheme(darkTheme = darkTheme) {
-        Row {
+        ProductItem(product = products.first(), onAction = {})
+    }
+}
 
-        }
-        ProductItem(
-            product = Product(
-                title = "iPhone 9",
-                description = "An apple mobile which is nothing like apple",
-                price = 549,
-                discountPercentage = 12.96,
-                newPrice = 477.85,
-                rating = 4.69,
-                stock = 94,
-                brand = "Apple",
-                thumbnail = "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg"
-            ),
-            onAction = {}
-        )
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+private fun ProductItemWithoutDiscountPreview(
+    @PreviewParameter(ThemeModePreview::class) darkTheme: Boolean
+) {
+    ProductListTheme(darkTheme = darkTheme) {
+        ProductItem(product = products.first().copy(discountPercentage = 0.0), onAction = {})
     }
 }
