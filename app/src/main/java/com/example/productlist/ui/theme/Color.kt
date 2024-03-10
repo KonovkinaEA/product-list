@@ -2,6 +2,8 @@ package com.example.productlist.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val Green = Color(0xFF34C759)
+
 val LightSupportSeparator = Color(0x33000000)
 val LightSupportOverlay = Color(0x0F000000)
 val LightLabelPrimary = Color(0xFF000000)
