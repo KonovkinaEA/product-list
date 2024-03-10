@@ -73,6 +73,62 @@ class RepositoryImpl @Inject constructor() : Repository {
                 "https://cdn.dummyjson.com/product-images/11/3.jpg",
                 "https://cdn.dummyjson.com/product-images/11/thumbnail.jpg"
             )
+        ),
+        Product(
+            id = 16,
+            title = "Hyaluronic Acid Serum",
+            description = "L'OrÃ©al Paris introduces Hyaluron Expert Replumping Serum formulated with 1.5% Hyaluronic Acid",
+            price = 19,
+            discountPercentage = 13.31,
+            rating = 4.83,
+            stock = 110,
+            brand = "L'Oreal Paris",
+            category = Category.SKINCARE,
+            thumbnail = "https://cdn.dummyjson.com/product-images/16/thumbnail.jpg",
+            images = listOf(
+                "https://cdn.dummyjson.com/product-images/16/1.png",
+                "https://cdn.dummyjson.com/product-images/16/2.webp",
+                "https://cdn.dummyjson.com/product-images/16/3.jpg",
+                "https://cdn.dummyjson.com/product-images/16/4.jpg",
+                "https://cdn.dummyjson.com/product-images/16/thumbnail.jpg"
+            )
+        ),
+        Product(
+            id = 22,
+            title = "Elbow Macaroni - 400 gm",
+            description = "Product details of Bake Parlor Big Elbow Macaroni - 400 gm",
+            price = 14,
+            discountPercentage = 15.58,
+            rating = 4.57,
+            stock = 146,
+            brand = "Bake Parlor Big",
+            category = Category.GROCERIES,
+            thumbnail = "https://cdn.dummyjson.com/product-images/22/thumbnail.jpg",
+            images = listOf(
+                "https://cdn.dummyjson.com/product-images/22/1.jpg",
+                "https://cdn.dummyjson.com/product-images/22/2.jpg",
+                "https://cdn.dummyjson.com/product-images/22/3.jpg"
+            )
+        ),
+        Product(
+            id = 26,
+            title = "Plant Hanger For Home",
+            description = "Boho Decor Plant Hanger For Home Wall Decoration Macrame Wall Hanging Shelf",
+            price = 41,
+            discountPercentage = 17.86,
+            rating = 4.08,
+            stock = 131,
+            brand = "Boho Decor",
+            category = Category.HOME_DECORATION,
+            thumbnail = "https://cdn.dummyjson.com/product-images/26/thumbnail.jpg",
+            images = listOf(
+                "https://cdn.dummyjson.com/product-images/26/1.jpg",
+                "https://cdn.dummyjson.com/product-images/26/2.jpg",
+                "https://cdn.dummyjson.com/product-images/26/3.jpg",
+                "https://cdn.dummyjson.com/product-images/26/4.jpg",
+                "https://cdn.dummyjson.com/product-images/26/5.jpg",
+                "https://cdn.dummyjson.com/product-images/26/thumbnail.jpg"
+            )
         )
     )
 }
