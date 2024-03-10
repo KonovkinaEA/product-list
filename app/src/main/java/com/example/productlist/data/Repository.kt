@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface Repository {
     val products: StateFlow<List<Product>>
+    suspend fun loadProductsData(skipFirst: Int)
 }
