@@ -1,5 +1,6 @@
 package com.example.productlist.ui.screens.list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,33 +17,40 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.productlist.data.model.ProductsDataState
+import com.example.productlist.ui.screens.list.components.ListTopAppBar
 import com.example.productlist.ui.screens.list.components.ProductItem
-import com.example.productlist.ui.screens.list.model.ListUiState
+import com.example.productlist.ui.screens.list.model.ListAction
+import com.example.productlist.ui.theme.ExtendedTheme
 import com.example.productlist.ui.theme.ProductListTheme
 import com.example.productlist.ui.theme.ThemeModePreview
 import com.example.productlist.ui.util.products
 
 @Composable
 fun ListScreen(viewModel: ListViewModel = hiltViewModel()) {
-    val uiState by viewModel.uiState.collectAsState()
+    val state by viewModel.productsDataState.collectAsState()
 
-    ListScreenContent(uiState)
+    ListScreenContent(state, viewModel::onAction)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ListScreenContent(uiState: ListUiState) {
-    Scaffold { paddingValues ->
+private fun ListScreenContent(state: ProductsDataState, onAction: (ListAction) -> Unit) {
+    Scaffold(
+        topBar = { ListTopAppBar(state.isFirstPage, state.isLastPage, onAction) }
+    ) { paddingValues ->
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(2),
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .background(ExtendedTheme.colors.backPrimary)
+                .padding(paddingValues)
+                .padding(horizontal = 5.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalItemSpacing = 10.dp,
         ) {
-            items(uiState.products) {
-                ProductItem(product = it, onAction = {})
+            items(state.products) { product ->
+                ProductItem(product, onAction)
             }
         }
     }
@@ -55,7 +63,12 @@ private fun ListScreenPreview(
 ) {
     ProductListTheme(darkTheme = darkTheme) {
         ListScreenContent(
-            uiState = ListUiState(products)
+            state = ProductsDataState(
+                products = products,
+                isFirstPage = false,
+                isLastPage = false
+            ),
+            onAction = {}
         )
     }
 }

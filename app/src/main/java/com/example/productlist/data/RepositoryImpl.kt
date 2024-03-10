@@ -3,6 +3,7 @@ package com.example.productlist.data
 import com.example.productlist.data.api.ApiService
 import com.example.productlist.data.api.model.ProductsListServer
 import com.example.productlist.data.model.Product
+import com.example.productlist.data.model.ProductsDataState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,18 +17,28 @@ class RepositoryImpl @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher
 ) : Repository {
 
-    private val _products: MutableStateFlow<List<Product>> = MutableStateFlow(emptyList())
-    override val products: StateFlow<List<Product>>
-        get() = _products.asStateFlow()
+    private var skipFirst: Int = 0
 
-    override suspend fun loadProductsData(skipFirst: Int) = withContext(ioDispatcher) {
+    private val _productsDataState = MutableStateFlow(ProductsDataState())
+    override val productsDataState: StateFlow<ProductsDataState>
+        get() = _productsDataState.asStateFlow()
+
+    override suspend fun loadProductsData(nextElements: Boolean) = withContext(ioDispatcher) {
+        if (!nextElements) skipFirst -= PRODUCTS_COUNT_PER_PAGE * 2
         try {
             val response = apiService.getProductsData(skipFirst, PRODUCTS_COUNT_PER_PAGE)
             if (response.isSuccessful) {
                 val dataFromServer = response.body() as ProductsListServer
-                val productsList = dataFromServer.products?.map { Product.fromServerModel(it) }
-                if (!productsList.isNullOrEmpty()) {
-                    _products.update { productsList }
+                val productsList = dataFromServer.products.map { Product.fromServerModel(it) }
+                if (productsList.isNotEmpty()) {
+                    _productsDataState.update {
+                        productsDataState.value.copy(
+                            products = productsList,
+                            isFirstPage = dataFromServer.skip == 0,
+                            isLastPage = dataFromServer.total <= dataFromServer.skip + dataFromServer.limit
+                        )
+                    }
+                    skipFirst = dataFromServer.skip + PRODUCTS_COUNT_PER_PAGE
                 }
             } else {
                 // TODO
