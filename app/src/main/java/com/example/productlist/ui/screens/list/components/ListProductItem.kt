@@ -86,24 +86,7 @@ fun ProductItem(product: Product, onAction: (ListAction) -> Unit) {
                 PriceWithoutDiscount(product = product)
             }
             Spacer(modifier = Modifier.height(5.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(5.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Star,
-                    contentDescription = null,
-                    tint = ExtendedTheme.colors.labelPrimary,
-                    modifier = Modifier.size(10.dp)
-                )
-                Text(
-                    text = "${product.rating}",
-                    style = MaterialTheme.typography.headlineMedium.copy(
-                        color = ExtendedTheme.colors.labelPrimary
-                    )
-                )
-            }
+            Rating(product = product)
         }
     }
 }
@@ -142,6 +125,27 @@ private fun PriceWithoutDiscount(product: Product) {
             color = ExtendedTheme.colors.labelSecondary
         )
     )
+}
+
+@Composable
+private fun Rating(product: Product) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(5.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Star,
+            contentDescription = null,
+            tint = ExtendedTheme.colors.labelPrimary,
+            modifier = Modifier.size(10.dp)
+        )
+        Text(
+            text = "${product.rating}",
+            style = MaterialTheme.typography.headlineMedium.copy(
+                color = ExtendedTheme.colors.labelPrimary
+            )
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
