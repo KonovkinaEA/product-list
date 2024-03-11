@@ -16,7 +16,7 @@ val products = listOf(
         brand = "brand1",
         category = Category.DEFAULT,
         thumbnail = "thumbnail1",
-        images = emptyList()
+        images = listOf()
     ),
     Product(
         id = 1,

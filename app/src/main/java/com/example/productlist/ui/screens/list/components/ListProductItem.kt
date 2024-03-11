@@ -44,7 +44,7 @@ fun ProductItem(product: Product, onAction: (ListAction) -> Unit) {
         colors = CardDefaults.cardColors(
             containerColor = ExtendedTheme.colors.backSecondary
         ),
-        onClick = { onAction(ListAction.OpenProduct(product)) }
+        onClick = { onAction(ListAction.OpenProduct(product.id)) }
     ) {
         AsyncImage(
             model = product.thumbnail,

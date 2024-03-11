@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -27,8 +28,15 @@ import com.example.productlist.ui.theme.ThemeModePreview
 import com.example.productlist.ui.util.products
 
 @Composable
-fun ListScreen(viewModel: ListViewModel = hiltViewModel()) {
+fun ListScreen(
+    onProductOpen: (String) -> Unit,
+    viewModel: ListViewModel = hiltViewModel()
+) {
     val state by viewModel.productsDataState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.openProductId.collect { onProductOpen("$it") }
+    }
 
     ListScreenContent(state, viewModel::onAction)
 }

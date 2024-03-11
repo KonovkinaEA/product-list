@@ -23,6 +23,9 @@ class RepositoryImpl @Inject constructor(
     override val productsDataState: StateFlow<ProductsDataState>
         get() = _productsDataState.asStateFlow()
 
+    override suspend fun getProduct(id: Int) =
+        _productsDataState.value.products.firstOrNull { it.id == id }
+
     override suspend fun loadProductsData(nextElements: Boolean) = withContext(ioDispatcher) {
         if (!nextElements) skipFirst -= PRODUCTS_COUNT_PER_PAGE * 2
         try {
