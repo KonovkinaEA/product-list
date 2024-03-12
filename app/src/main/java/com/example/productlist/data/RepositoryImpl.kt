@@ -9,7 +9,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -34,23 +33,17 @@ class RepositoryImpl @Inject constructor(
                 val dataFromServer = response.body() as ProductsListServer
                 val productsList = dataFromServer.products.map { Product.fromServerModel(it) }
                 if (productsList.isNotEmpty()) {
-                    _productsDataState.update {
-                        ProductsDataState(
-                            products = productsList,
-                            isFirstPage = dataFromServer.skip == 0,
-                            isLastPage = dataFromServer.total <= dataFromServer.skip + dataFromServer.limit
-                        )
-                    }
+                    _productsDataState.value = ProductsDataState(
+                        products = productsList,
+                        isFirstPage = dataFromServer.skip == 0,
+                        isLastPage = dataFromServer.total <= dataFromServer.skip + dataFromServer.limit
+                    )
                 }
             } else {
-                _productsDataState.update {
-                    productsDataState.value.copy(errorOnLoading = true)
-                }
+                _productsDataState.value = ProductsDataState(errorOnLoading = true)
             }
-        } catch (_: Exception) {
-            _productsDataState.update {
-                productsDataState.value.copy(errorOnLoading = true)
-            }
+        } catch (e: Exception) {
+            _productsDataState.value = ProductsDataState(errorOnLoading = true)
         }
     }
 
