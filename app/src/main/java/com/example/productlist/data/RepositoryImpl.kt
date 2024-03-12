@@ -2,6 +2,7 @@ package com.example.productlist.data
 
 import com.example.productlist.data.api.ApiService
 import com.example.productlist.data.api.model.ProductsListServer
+import com.example.productlist.data.model.Category
 import com.example.productlist.data.model.LoadingOptions
 import com.example.productlist.data.model.Product
 import com.example.productlist.data.model.ProductsDataState
@@ -18,6 +19,7 @@ class RepositoryImpl @Inject constructor(
 ) : Repository {
 
     private var skipFirst: Int = 0
+    private var selectedCategory: Category = Category.ALL
 
     private val _productsDataState = MutableStateFlow(ProductsDataState())
     override val productsDataState: StateFlow<ProductsDataState>
@@ -26,9 +28,16 @@ class RepositoryImpl @Inject constructor(
     override suspend fun getProduct(id: Int) =
         _productsDataState.value.products.firstOrNull { it.id == id }
 
-    override suspend fun dataLoad() {
+    override suspend fun loadData() {
         try {
-            val response = apiService.getProductsData(skipFirst, PRODUCTS_COUNT_PER_PAGE)
+            val response = if (selectedCategory == Category.ALL) {
+                apiService.getProductsData(skipFirst, PRODUCTS_COUNT_PER_PAGE)
+            } else {
+                apiService.getProductsDataWithFilter(
+                    selectedCategory.value, skipFirst, PRODUCTS_COUNT_PER_PAGE
+                )
+            }
+
             if (response.isSuccessful) {
                 val dataFromServer = response.body() as ProductsListServer
                 val productsList = dataFromServer.products.map { Product.fromServerModel(it) }
@@ -53,7 +62,13 @@ class RepositoryImpl @Inject constructor(
         } else {
             skipFirst -= PRODUCTS_COUNT_PER_PAGE
         }
-        dataLoad()
+        loadData()
+    }
+
+    override suspend fun reloadDataWithFilter(category: Category) {
+        selectedCategory = category
+        skipFirst = 0
+        loadData()
     }
 
     companion object {
