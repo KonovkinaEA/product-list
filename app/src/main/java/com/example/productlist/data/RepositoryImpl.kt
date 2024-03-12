@@ -2,6 +2,7 @@ package com.example.productlist.data
 
 import com.example.productlist.data.api.ApiService
 import com.example.productlist.data.api.model.ProductsListServer
+import com.example.productlist.data.model.LoadingOptions
 import com.example.productlist.data.model.Product
 import com.example.productlist.data.model.ProductsDataState
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,8 +24,10 @@ class RepositoryImpl @Inject constructor(
     override val productsDataState: StateFlow<ProductsDataState>
         get() = _productsDataState.asStateFlow()
 
-    override suspend fun loadProductsData(nextElements: Boolean) = withContext(ioDispatcher) {
-        if (!nextElements) skipFirst -= PRODUCTS_COUNT_PER_PAGE * 2
+    override suspend fun getProduct(id: Int) =
+        _productsDataState.value.products.firstOrNull { it.id == id }
+
+    override suspend fun dataLoad() {
         try {
             val response = apiService.getProductsData(skipFirst, PRODUCTS_COUNT_PER_PAGE)
             if (response.isSuccessful) {
@@ -38,7 +41,6 @@ class RepositoryImpl @Inject constructor(
                             isLastPage = dataFromServer.total <= dataFromServer.skip + dataFromServer.limit
                         )
                     }
-                    skipFirst = dataFromServer.skip + PRODUCTS_COUNT_PER_PAGE
                 }
             } else {
                 // TODO
@@ -46,6 +48,15 @@ class RepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             // TODO
         }
+    }
+
+    override suspend fun loadNextData(option: LoadingOptions) = withContext(ioDispatcher) {
+        if (option == LoadingOptions.NEXT_PRODUCTS) {
+            skipFirst += PRODUCTS_COUNT_PER_PAGE
+        } else {
+            skipFirst -= PRODUCTS_COUNT_PER_PAGE
+        }
+        dataLoad()
     }
 
     companion object {

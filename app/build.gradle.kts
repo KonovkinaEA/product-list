@@ -54,6 +54,9 @@ android {
 
 dependencies {
 
+    // accompanist
+    implementation(libs.accompanist.pager)
+
     // networking
     implementation(libs.retrofit2.retrofit)
     implementation(libs.retrofit2.converter.gson)
