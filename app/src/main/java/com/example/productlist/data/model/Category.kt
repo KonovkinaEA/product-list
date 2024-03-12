@@ -1,13 +1,14 @@
 package com.example.productlist.data.model
 
 enum class Category(val value: String) {
-    SMARTPHONES("smartphones"),
-    LAPTOPS("laptops"),
-    FRAGRANCES("fragrances"),
-    SKINCARE("skincare"),
-    GROCERIES("groceries"),
-    HOME_DECORATION("home-decoration"),
-    DEFAULT("default");
+    SMARTPHONES("Smartphones"),
+    LAPTOPS("Laptops"),
+    FRAGRANCES("Fragrances"),
+    SKINCARE("Skincare"),
+    GROCERIES("Groceries"),
+    HOME_DECORATION("Home-decoration"),
+    DEFAULT("Default"),
+    ALL("All");
 
     companion object {
 

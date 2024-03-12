@@ -22,7 +22,7 @@ class ListViewModel @Inject constructor(private val repository: Repository) : Vi
     val productsDataState: StateFlow<ProductsDataState> = repository.productsDataState
 
     init {
-        viewModelScope.launch { repository.dataLoad() }
+        viewModelScope.launch { repository.loadData() }
     }
 
     fun onAction(action: ListAction) {
@@ -31,6 +31,10 @@ class ListViewModel @Inject constructor(private val repository: Repository) : Vi
             ListAction.PreviousPage -> loadData(LoadingOptions.PREV_PRODUCTS)
             is ListAction.OpenProduct -> {
                 viewModelScope.launch { _openProductId.send(action.id) }
+            }
+
+            is ListAction.ReloadData -> {
+                viewModelScope.launch { repository.reloadDataWithFilter(action.category) }
             }
         }
     }

@@ -7,6 +7,7 @@ import com.example.productlist.data.api.model.ProductsListServer
 import com.example.productlist.data.model.Product
 import com.example.productlist.data.model.ProductsDataState
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -76,10 +77,11 @@ class RepositoryImplTest {
 
     @Test
     fun testSuccessfulDataLoad() = runTest {
-        repository.dataLoad()
+        repository.loadData()
         val state = repository.productsDataState.value
         advanceUntilIdle()
 
+        coVerify { apiService.getProductsData(SKIP_FIRST_ELEMENTS, LIMIT_PRODUCTS_COUNT) }
         Assert.assertTrue(state.products.isNotEmpty())
     }
 
@@ -87,7 +89,7 @@ class RepositoryImplTest {
     fun testUnsuccessfulDataLoad() = runTest {
         coEvery { apiService.getProductsData(any(), any()) } throws mockk()
 
-        repository.dataLoad()
+        repository.loadData()
         val state = repository.productsDataState.value
         advanceUntilIdle()
 

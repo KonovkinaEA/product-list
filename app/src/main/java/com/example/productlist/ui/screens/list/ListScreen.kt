@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.productlist.data.model.ProductsDataState
+import com.example.productlist.ui.screens.list.components.ListBottomAppBar
 import com.example.productlist.ui.screens.list.components.ListTopAppBar
 import com.example.productlist.ui.screens.list.components.ProductItem
 import com.example.productlist.ui.screens.list.model.ListAction
@@ -46,7 +47,8 @@ fun ListScreen(onProductOpen: (String) -> Unit, viewModel: ListViewModel = hiltV
 @Composable
 private fun ListScreenContent(state: ProductsDataState, onAction: (ListAction) -> Unit) {
     Scaffold(
-        topBar = { ListTopAppBar(state.isFirstPage, state.isLastPage, onAction) }
+        topBar = { ListTopAppBar(state.isFirstPage, state.isLastPage, onAction) },
+        bottomBar = { ListBottomAppBar(onAction) }
     ) { paddingValues ->
         if (!state.errorOnLoading) {
             LazyVerticalStaggeredGrid(
