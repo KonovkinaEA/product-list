@@ -1,7 +1,6 @@
 package com.example.productlist.ui.screens.details
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -48,26 +46,20 @@ private fun DetailsScreenContent(product: Product, onAction: (DetailsAction) -> 
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
             ImageCarousel(images = product.images)
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             BackgroundCard { PriceCard(product) }
             Spacer(modifier = Modifier.height(10.dp))
 
             BackgroundCard {
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 10.dp)
-                        .padding(bottom = 10.dp)
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = product.title,
-                            style = MaterialTheme.typography.displayLarge.copy(
-                                color = ExtendedTheme.colors.labelPrimary
-                            )
+                Column(modifier = Modifier.padding(10.dp)) {
+                    Text(
+                        text = product.title,
+                        style = MaterialTheme.typography.displayLarge.copy(
+                            color = ExtendedTheme.colors.labelPrimary
                         )
-                        RatingCard(product.rating)
-                    }
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
                     Text(
                         text = product.brand,
                         style = MaterialTheme.typography.displayMedium.copy(
@@ -81,6 +73,8 @@ private fun DetailsScreenContent(product: Product, onAction: (DetailsAction) -> 
                             color = ExtendedTheme.colors.labelTertiary
                         )
                     )
+                    Spacer(modifier = Modifier.height(15.dp))
+                    RatingCard(product.rating)
                 }
             }
         }

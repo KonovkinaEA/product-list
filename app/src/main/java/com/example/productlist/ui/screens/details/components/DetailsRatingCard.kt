@@ -21,7 +21,7 @@ import com.example.productlist.ui.theme.ThemeModePreview
 
 @Composable
 fun RatingCard(rating: Double) {
-    ItemCard(backgroundColor = ExtendedTheme.colors.backElevated) {
+    ItemCard(paddings = 0.dp, backgroundColor = ExtendedTheme.colors.backElevated) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(5.dp),
             verticalAlignment = Alignment.CenterVertically,

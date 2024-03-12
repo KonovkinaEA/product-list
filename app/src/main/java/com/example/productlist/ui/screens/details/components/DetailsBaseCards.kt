@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.productlist.ui.theme.ExtendedTheme
 import com.example.productlist.ui.theme.Green
@@ -31,10 +32,10 @@ fun BackgroundCard(content: @Composable (BoxScope.() -> Unit)) {
 }
 
 @Composable
-fun ItemCard(backgroundColor: Color, content: @Composable (BoxScope.() -> Unit)) {
+fun ItemCard(paddings: Dp, backgroundColor: Color, content: @Composable (BoxScope.() -> Unit)) {
     Box(
         modifier = Modifier
-            .padding(10.dp)
+            .padding(paddings)
             .clip(RoundedCornerShape(7.dp))
             .background(backgroundColor),
         content = content
@@ -57,7 +58,7 @@ private fun ItemCardPreview(
     @PreviewParameter(ThemeModePreview::class) darkTheme: Boolean
 ) {
     ProductListTheme(darkTheme = darkTheme) {
-        ItemCard(backgroundColor = Green) {
+        ItemCard(paddings = 0.dp, backgroundColor = Green) {
             Text(
                 text = "text2",
                 modifier = Modifier.padding(5.dp)

@@ -22,8 +22,8 @@ import com.example.productlist.ui.util.products
 fun PriceCard(product: Product) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         if (product.discountPercentage > 0.0) {
-            ItemCard(backgroundColor = Green) {
-                CardText("${product.newPrice}")
+            ItemCard(paddings = 10.dp, backgroundColor = Green) {
+                CardText("$${product.newPrice}")
             }
             Text(
                 text = "$${product.price}",
@@ -38,8 +38,8 @@ fun PriceCard(product: Product) {
                 modifier = Modifier.padding(7.dp)
             )
         } else {
-            ItemCard(backgroundColor = Green) {
-                CardText("${product.price}")
+            ItemCard(paddings = 10.dp, backgroundColor = Green) {
+                CardText("$${product.price}")
             }
         }
     }
