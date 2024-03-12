@@ -29,7 +29,7 @@ fun RatingCard(rating: Double) {
         ) {
             Icon(
                 imageVector = Icons.Filled.Star,
-                contentDescription = null,
+                contentDescription = "Rating icon",
                 tint = ExtendedTheme.colors.labelPrimary,
                 modifier = Modifier.size(20.dp)
             )

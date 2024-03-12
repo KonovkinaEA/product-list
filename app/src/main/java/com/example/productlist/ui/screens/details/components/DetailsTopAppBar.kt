@@ -28,7 +28,7 @@ fun DetailsTopAppBar(onAction: (DetailsAction) -> Unit) {
             IconButton(onClick = { onAction(DetailsAction.CloseDetails) }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = null
+                    contentDescription = "Back button"
                 )
             }
         },

@@ -27,7 +27,7 @@ fun Rating(rating: Double) {
     ) {
         Icon(
             imageVector = Icons.Filled.Star,
-            contentDescription = null,
+            contentDescription = "Rating icon",
             tint = ExtendedTheme.colors.labelPrimary,
             modifier = Modifier.size(10.dp)
         )
