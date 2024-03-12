@@ -35,7 +35,7 @@ class RepositoryImpl @Inject constructor(
                 val productsList = dataFromServer.products.map { Product.fromServerModel(it) }
                 if (productsList.isNotEmpty()) {
                     _productsDataState.update {
-                        productsDataState.value.copy(
+                        ProductsDataState(
                             products = productsList,
                             isFirstPage = dataFromServer.skip == 0,
                             isLastPage = dataFromServer.total <= dataFromServer.skip + dataFromServer.limit
@@ -43,10 +43,14 @@ class RepositoryImpl @Inject constructor(
                     }
                 }
             } else {
-                // TODO
+                _productsDataState.update {
+                    productsDataState.value.copy(errorOnLoading = true)
+                }
             }
-        } catch (e: Exception) {
-            // TODO
+        } catch (_: Exception) {
+            _productsDataState.update {
+                productsDataState.value.copy(errorOnLoading = true)
+            }
         }
     }
 
