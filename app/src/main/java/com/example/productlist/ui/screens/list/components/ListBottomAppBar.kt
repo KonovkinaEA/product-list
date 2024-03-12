@@ -34,7 +34,7 @@ fun ListBottomAppBar(onAction: (ListAction) -> Unit) {
     BottomAppBar(
         actions = {
             Text(
-                text = "Filters",
+                text = "Categories",
                 style = MaterialTheme.typography.titleLarge.copy(
                     color = ExtendedTheme.colors.labelPrimary
                 ),
@@ -51,7 +51,7 @@ fun ListBottomAppBar(onAction: (ListAction) -> Unit) {
 @Composable
 private fun FilterDropdownMenu(onAction: (ListAction) -> Unit) {
     var filterExpanded by remember { mutableStateOf(false) }
-    var filter by remember { mutableStateOf("All") }
+    var filter by remember { mutableStateOf(Category.ALL.value) }
 
     ExposedDropdownMenuBox(
         expanded = filterExpanded,
