@@ -28,10 +28,7 @@ import com.example.productlist.ui.theme.ThemeModePreview
 import com.example.productlist.ui.util.products
 
 @Composable
-fun ListScreen(
-    onProductOpen: (String) -> Unit,
-    viewModel: ListViewModel = hiltViewModel()
-) {
+fun ListScreen(onProductOpen: (String) -> Unit, viewModel: ListViewModel = hiltViewModel()) {
     val state by viewModel.productsDataState.collectAsState()
 
     LaunchedEffect(Unit) {
