@@ -1,8 +1,8 @@
 package com.example.productlist.ui.screens.details.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
@@ -11,6 +11,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.productlist.R
 import com.example.productlist.ui.theme.ProductListTheme
@@ -26,7 +27,7 @@ fun ImageCarousel(images: List<String>) {
         key = { images[it] },
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.5f)
+            .height(400.dp)
     ) { index ->
         AsyncImage(
             model = images[index],

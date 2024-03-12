@@ -30,7 +30,7 @@ fun ListTopAppBar(firstPage: Boolean, lastPage: Boolean, onAction: (ListAction) 
                 IconButton(onClick = { onAction(ListAction.PreviousPage) }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                        contentDescription = null
+                        contentDescription = "Previous page"
                     )
                 }
             }
@@ -40,7 +40,7 @@ fun ListTopAppBar(firstPage: Boolean, lastPage: Boolean, onAction: (ListAction) 
                 IconButton(onClick = { onAction(ListAction.NextPage) }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = null
+                        contentDescription = "Next page"
                     )
                 }
             }
